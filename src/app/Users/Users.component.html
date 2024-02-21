@@ -1,7 +1,57 @@
-<mat-list>
-  <mat-list-item *ngFor="let user of users$ | async">
-    <h3 mat-line>{{ user.name }}</h3>
-    <p mat-line>{{ user.email }}</p>
-    <a [routerLink]="['/user', user.id]">DETAILS</a>
-  </mat-list-item>
-</mat-list>
+<div class="table-container">
+  <h1>List Users</h1>
+  <div class="mat-elevation-z8">
+    <mat-form-field appearance="fill">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        placeholder="please enter a value"
+        (input)="applyFilter($event)"
+      />
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>username</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Details">
+        <th mat-header-cell *matHeaderCellDef>Detail</th>
+        <td mat-cell *matCellDef="let element">
+          <a
+            [routerLink]="['/user', element.id]"
+            data-toggle="modal"
+            data-target="#editor"
+            matTooltip="Delete"
+            aria-label="tooltip"
+          >
+            Detail
+          </a>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[4, 8, 12, 16]"
+      showFirstLastButtons
+      aria-label="Select page of users"
+    >
+    </mat-paginator>
+  </div>
+</div>

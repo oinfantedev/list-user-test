@@ -1,3 +1,36 @@
-<h1>
-  {{ user$ | async | json }}
-</h1>
+@if (user$ | async) {
+<mat-card class="user-card">
+  <mat-card-header>
+    <mat-card-title>{{ (user$ | async)?.name }}</mat-card-title>
+    <mat-card-subtitle>{{ (user$ | async)?.username }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>Email: {{ (user$ | async)?.email }}</p>
+    <p>Phone: {{ (user$ | async)?.phone }}</p>
+    <p>
+      Website:
+      <a href="http://{{ (user$ | async)?.website }}">{{
+        (user$ | async)?.website
+      }}</a>
+    </p>
+    <p>
+      Address: {{ (user$ | async)?.address?.street }},
+      {{ (user$ | async)?.address?.suite }},
+      {{ (user$ | async)?.address?.city }},
+      {{ (user$ | async)?.address?.zipcode }}
+    </p>
+    <p>
+      Company: {{ (user$ | async)?.company?.name }} -
+      {{ (user$ | async)?.company?.catchPhrase }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <a href="{{ (user$ | async)?.website }}" target="_blank">{{
+      (user$ | async)?.website
+    }}</a>
+  </mat-card-actions>
+</mat-card>
+<a [routerLink]="['/']"> Go Back</a>
+}
+<!-- Cards with media area -->
