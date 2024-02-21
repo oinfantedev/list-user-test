@@ -8,7 +8,7 @@ import { IUser } from '../interfaces/user';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
@@ -30,7 +30,9 @@ export class UsersComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['id', 'name', 'email', 'username', 'Details'];
   dataSource = new MatTableDataSource<IUser>();
-
+  searchControl = new FormControl('', [
+    Validators.pattern('^[a-zA-Z0-9]*$')
+  ]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -43,6 +45,8 @@ export class UsersComponent implements AfterViewInit {
   }
 
   applyFilter(event: Event): void {
+    if (this.searchControl.invalid) return;
+
     const filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
     this.dataSource.filter = filter;
     if (this.dataSource.paginator) {

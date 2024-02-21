@@ -5,10 +5,14 @@
       <mat-form-field appearance="fill">
         <mat-label>Search</mat-label>
         <input
+          [formControl]="searchControl"
           matInput
           placeholder="please enter a value"
           (input)="applyFilter($event)"
         />
+        <mat-error *ngIf="searchControl.hasError('pattern')">
+          Solo caracteres alfanuméricos permitidos
+        </mat-error>
       </mat-form-field>
     </div>
 
