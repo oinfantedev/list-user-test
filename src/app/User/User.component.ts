@@ -2,8 +2,7 @@ import { UsersService } from './../services/Users.service';
 import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
-import { Params } from '@angular/router';
+import { Observable, map, switchMap } from 'rxjs';
 import { IUser } from '../interfaces/user';
 @Component({
   selector: 'app-user',
@@ -19,9 +18,7 @@ import { IUser } from '../interfaces/user';
 })
 export class UserComponent {
   user$: Observable<IUser>;
-  constructor(private readonly usersService: UsersService, private readonly activateRoute: ActivatedRoute) { 
-    this.user$ = this.activateRoute.params.pipe(
-      switchMap((params: Params) => this.usersService.getUser(params['id']))
-    );
+  constructor( private readonly activateRoute: ActivatedRoute) { 
+    this.user$ = this.activateRoute.data.pipe(map(({user}) => user));
   }
  }

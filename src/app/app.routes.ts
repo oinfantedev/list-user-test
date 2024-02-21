@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { UserResolver } from './services/user.resolve';
 
 export const routes: Routes = [
     {
@@ -7,7 +8,8 @@ export const routes: Routes = [
     },
     {
         path: 'user/:id',
-        loadComponent: () => import('./User/User.component').then(m => m.UserComponent)
+        loadComponent: () => import('./User/User.component').then(m => m.UserComponent),
+        resolve: { user: UserResolver }
     },
     {
         path: '*',
