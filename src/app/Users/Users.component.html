@@ -1,0 +1,7 @@
+<mat-list>
+  <mat-list-item *ngFor="let user of users$ | async">
+    <h3 mat-line>{{ user.name }}</h3>
+    <p mat-line>{{ user.email }}</p>
+    <a [routerLink]="['/user', user.id]">DETAILS</a>
+  </mat-list-item>
+</mat-list>
